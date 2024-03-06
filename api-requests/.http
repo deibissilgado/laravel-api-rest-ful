@@ -1,0 +1,10 @@
+POST http://laravel-api-rest-ful.test/api/users 
+
+Content-Type: application/json
+{
+  "name": "usuario",
+  "email": "correo1@example.com",
+  "password": "123456"
+}
+
+GET http://laravel-api-rest-ful.test/api/users 
