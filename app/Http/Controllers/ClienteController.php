@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Http\Requests\StoreClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
+use App\Http\Resources\ClienteCollection;
 
 class ClienteController extends Controller
 {
@@ -13,7 +14,8 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        //
+        $clientes = Cliente::all();
+        return new ClienteCollection($clientes);
     }
 
     /**

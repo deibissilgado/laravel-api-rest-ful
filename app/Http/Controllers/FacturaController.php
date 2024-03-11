@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Factura;
 use App\Http\Requests\StoreFacturaRequest;
 use App\Http\Requests\UpdateFacturaRequest;
+use App\Http\Resources\FacturaCollection;
 
 class FacturaController extends Controller
 {
@@ -13,7 +14,8 @@ class FacturaController extends Controller
      */
     public function index()
     {
-        //
+        $facturas = Factura::all();       
+        return new FacturaCollection($facturas);
     }
 
     /**
