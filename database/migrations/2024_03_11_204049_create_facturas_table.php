@@ -18,10 +18,6 @@ return new class extends Migration
             $table->string('estado');
             $table->datetime('fecha_facturada');
             $table->datetime('fecha_pagada')->nullable();
-            $table->string('address');
-            $table->string('city');
-            $table->string('state');
-            $table->string('postal_code');
             $table->timestamps();
         });
     }
