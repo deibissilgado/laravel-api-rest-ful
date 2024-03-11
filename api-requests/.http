@@ -7,4 +7,5 @@ Content-Type: application/json
   "password": "123456"
 }
 
-GET http://laravel-api-rest-ful.test/api/users 
+GET http://laravel-api-rest-ful.test/api/users?1
+

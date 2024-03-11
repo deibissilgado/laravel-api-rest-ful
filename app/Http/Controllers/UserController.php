@@ -21,8 +21,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {    
-        return   response()->json([$request->all(),]);
-        return User::create($request->all());
+        if ($request) {
+
+            // $user = new User();
+            // $user->name =  $request->name;
+            // $user->email =  $request->email;
+            // $user->password = $request->password;
+            // $user->save();
+           return   $request;
+
+        } else {
+            return   response()->json('no hay datos');
+        } 
     }
 
     /**
@@ -30,7 +40,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        return User::findOrFail($id);
+        $data = User::findOrFail($id);
+         return response()->json($data);
     }
 
     /**
