@@ -15,9 +15,18 @@ class ClienteFactory extends Factory
      * @return array<string, mixed>
      */
     public function definition(): array
-    {
-        return [
-            //
+    {       //tipo una empresa o una persona independiente
+            $tipo = $this->faker->randomElement(['I','E']);
+            $name = $tipo == 'I' ? $this->faker->name() : $this->faker->company();
+        
+            return [
+            'name'=>$name,
+            'tipo'=>$tipo,
+            'email'=> $this->faker->email(),
+            'direccion'=> $this->faker->streetAddress(),
+            'ciudad'=> $this->faker->city(),
+            'departamento'=> $this->faker->state(),
+            'codigo_postal'=> $this->faker->postcode(),
         ];
     }
 }
