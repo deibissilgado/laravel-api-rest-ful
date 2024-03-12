@@ -6,16 +6,28 @@ use App\Models\Factura;
 use App\Http\Requests\StoreFacturaRequest;
 use App\Http\Requests\UpdateFacturaRequest;
 use App\Http\Resources\FacturaCollection;
+use Illuminate\Http\Request;
+use App\Filters\FacturaFilter;
 
 class FacturaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $facturas = Factura::all();       
-        return new FacturaCollection($facturas);
+        $filtro = new FacturaFilter;
+        $queryItems = $filtro->transform($request);
+        if (count($queryItems) == 0) {
+            return new FacturaCollection(Factura::paginate());
+        } else {
+            $facturas = Factura::where($queryItems);
+            return new FacturaCollection($facturas->paginate()->appends($request->query()));
+        }
+        /*Ejemplo de solicitud 
+         http://laravel-api-rest-ful.test/api/v1/facturas?estado[eq]=p */    
+
+        
     }
 
     /**

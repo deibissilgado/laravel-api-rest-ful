@@ -1,3 +1,6 @@
+GET http://laravel-api-rest-ful.test/api/v1/clientes
+
+Send Request
 POST http://laravel-api-rest-ful.test/api/users 
 
 Content-Type: application/json
@@ -7,5 +10,6 @@ Content-Type: application/json
   "password": "123456"
 }
 
-GET http://laravel-api-rest-ful.test/api/users?1
+
+
 

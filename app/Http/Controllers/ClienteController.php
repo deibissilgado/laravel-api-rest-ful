@@ -5,17 +5,30 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Http\Requests\StoreClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
+use Illuminate\Http\Request;
 use App\Http\Resources\ClienteCollection;
+use App\Filters\ClienteFilter;
+
 
 class ClienteController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $clientes = Cliente::all();
-        return new ClienteCollection($clientes);
+        $filtro = new ClienteFilter;
+        $queryItems = $filtro->transform($request);
+      //Si el valor incluirFacturas en la petición, http://laravel-api-rest-ful.test/api/v1/clientes?incluirFacturas=true
+        $incluirFacturas = $request->query('incluirFacturas');
+        $clientes = Cliente::where($queryItems);
+        if ($incluirFacturas) {
+            $clientes = $clientes->with('facturas');
+        }
+        return new ClienteCollection($clientes->paginate()->appends($request->query()));
+        /*Ejemplo de uos de filtros filtro 
+        http://laravel-api-rest-ful.test/api/v1/clientes?departamento[eq]=Louisiana 
+        http://laravel-api-rest-ful.test/api/v1/clientes?tipo[eq]=i&incluirFacturas=true*/
     }
 
     /**
