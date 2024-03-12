@@ -26,6 +26,8 @@ Route::group(['prefix'=>'v1','namespace'=>'App\Http\Controllers'], function () {
     Route::apiResource('clientes',ClienteController::class);
     //pueba en el navegador así: http://laravel-api-rest-ful.test/api/v1/clientes
     Route::apiResource('facturas',FacturaController::class);
+    Route::post('facturas/agranel', 'FacturaController@aGranelStore');
+
 });
 
 Route::get('/users', [UserController::class, 'index']);

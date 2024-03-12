@@ -44,7 +44,10 @@ class ClienteController extends Controller
      */
     public function store(StoreClienteRequest $request)
     {
-        //
+        return  $request->all();
+        // Cliente::create($request->all());
+        // return new ClienteResource(Cliente::create($request->all()));
+        
     }
 
     /**
@@ -74,7 +77,7 @@ class ClienteController extends Controller
      */
     public function edit(Cliente $cliente)
     {
-        //
+        return  response()->json($cliente);
     }
 
     /**
@@ -82,7 +85,7 @@ class ClienteController extends Controller
      */
     public function update(UpdateClienteRequest $request, Cliente $cliente)
     {
-        //
+        $cliente->update($request->all());
     }
 
     /**

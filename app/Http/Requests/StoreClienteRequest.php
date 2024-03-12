@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreClienteRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreClienteRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true; //autoriza a todos
     }
 
     /**
@@ -21,8 +22,26 @@ class StoreClienteRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
+        return [            
+            'name'=> ['required'] ,
+            'tipo'=> ['required',Rule::in(['i','I','E','e'])],
+            'email'=> ['required','email'],
+            'direccion'=> ['required'],
+            'ciudad'=> ['required'],
+            'departamento'=> ['required'],
+            'codigoPostal'=> ['required'],
         ];
     }
+    /*El método prepareForValidation es un método utilizado en las clases de 
+    solicitudes (Request) en Laravel. Este método te permite manipular los 
+    datos de la solicitud antes de que se realice la validación de los mismos. */
+    protected function prepareForValidation(){
+
+        $this->merge([
+            'codigo_postal' => $this->codigoPostal,
+        ]);
+    }
+
+ 
+
 }

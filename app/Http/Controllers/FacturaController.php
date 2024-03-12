@@ -8,6 +8,8 @@ use App\Http\Requests\UpdateFacturaRequest;
 use App\Http\Resources\FacturaCollection;
 use Illuminate\Http\Request;
 use App\Filters\FacturaFilter;
+use App\Http\Requests\AGranelStoreFacturaRequest;
+use Illuminate\Support\Arr;
 
 class FacturaController extends Controller
 {
@@ -46,6 +48,17 @@ class FacturaController extends Controller
         //
     }
 
+    public function aGranelStore(AGranelStoreFacturaRequest $request){
+
+      $aGreanel = collect($request->all())->map( function($array,$key){
+                    return Arr::except($array,['clienteId',
+                                                'fechaFacturada',
+                                                'fechaPagada',
+                                                ]);
+               });
+     Factura::insert($aGreanel->toArray());
+
+    }
     /**
      * Display the specified resource.
      */
