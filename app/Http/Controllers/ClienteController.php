@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateClienteRequest;
 use Illuminate\Http\Request;
 use App\Http\Resources\ClienteCollection;
 use App\Filters\ClienteFilter;
-
+use App\Http\Resources\ClienteResource;
 
 class ClienteController extends Controller
 {
@@ -52,7 +52,20 @@ class ClienteController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        //
+        $incluirFacturas = request()->query('incluirFacturas');
+
+        if ($incluirFacturas) {
+            
+                 return new ClienteResource($cliente->loadMissing('facturas'));
+                 /*loadMissing es un método utilizado para cargar relaciones ausentes 
+                 de un modelo sin sobrecargar las relaciones que ya han sido cargadas 
+                 previamente. Esto es útil cuando tienes un modelo que ya ha sido recuperado 
+                 de la base de datos y deseas cargar una relación que aún no ha sido cargada 
+                 sin volver a cargar todas las relaciones que ya han sido cargadas previamente.*/
+             }
+        return new ClienteResource($cliente);
+        /*Ejemplo de peticion
+        http://laravel-api-rest-ful.test/api/v1/clientes/1 */
     }
 
     /**
