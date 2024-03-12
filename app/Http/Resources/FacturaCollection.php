@@ -13,7 +13,9 @@ class FacturaCollection extends ResourceCollection
      * @return array<int|string, mixed>
      */
     public function toArray(Request $request): array
-    {
+    {   /*se utiliza para transformar una colección de recursos
+        en un formato específico para su presentación en una respuesta HTTP, 
+        generalmente en formato JSON. */
         return parent::toArray($request);
     }
 }

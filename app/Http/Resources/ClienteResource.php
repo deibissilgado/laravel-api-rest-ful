@@ -24,6 +24,9 @@ class ClienteResource extends JsonResource
             'ciudad'=> $this->ciudad ,
             'departamento'=> $this->departamento ,
             'codigoPostal'=> $this->codigo_postal,
+            'facturas'=> FacturaResource::collection($this->whenLoaded('facturas')),
         ];
+        /* $this->whenLoaded('relation') es un método disponible en las clases de recursos  
+         incluye de una relación solo si esa relación ha sido cargada previamente. */
     }
 }

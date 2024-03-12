@@ -65,7 +65,8 @@ class ClienteController extends Controller
              }
         return new ClienteResource($cliente);
         /*Ejemplo de peticion
-        http://laravel-api-rest-ful.test/api/v1/clientes/1 */
+        http://laravel-api-rest-ful.test/api/v1/clientes/14 
+        http://laravel-api-rest-ful.test/api/v1/clientes/14?incluirFacturas=true */
     }
 
     /**
