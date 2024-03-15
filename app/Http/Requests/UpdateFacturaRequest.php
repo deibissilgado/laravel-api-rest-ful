@@ -11,7 +11,7 @@ class UpdateFacturaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,25 @@ class UpdateFacturaRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        $metodo = $this->method();
+
+        if ($metodo ==='PUT') {
+
+            return [
+                'cantidad'=> 'required|numeric' ,
+                'estado'=> 'required|in:p,P,v,V,f,F',
+                'fechaFacturada' => 'required|date_format:Y-m-d H:i:s',
+                'fechaPagada' => 'date_format:Y-m-d H:i:s|nullable',
+              ];
+            
+        }else{
+            //metodo PATCH , no requiere todos los parametros
+            return [
+                'cantidad'=> 'required|numeric' ,
+                'estado'=> 'required|in:p,P,v,V,f,F',
+                'fechaFacturada' => 'required|date_format:Y-m-d H:i:s',
+                'fechaPagada' => 'date_format:Y-m-d H:i:s|nullable',
+            ];
+        }
     }
 }

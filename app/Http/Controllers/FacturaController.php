@@ -96,9 +96,9 @@ class FacturaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Factura $factura)
+    public function edit(UpdateFacturaRequest $request, Factura $factura)
     {
-        //
+        $factura->update($request->all());
     }
 
     /**
@@ -106,7 +106,7 @@ class FacturaController extends Controller
      */
     public function update(UpdateFacturaRequest $request, Factura $factura)
     {
-        //
+        $factura->update($request->all());
     }
 
     /**
