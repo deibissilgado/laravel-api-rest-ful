@@ -46,7 +46,21 @@ class FacturaController extends Controller
      */
     public function store(StoreFacturaRequest $request)
     {
-        //
+       /* Puedes hacerlo así:
+           // Obtener los datos validados del request
+            $data = $request->validated();
+
+            // Insertar los datos en la tabla 'facturas'
+            Factura::insert([
+                'cliente_id' => $data['clienteId'],
+                'cantidad' => $data['cantidad'],
+                'estado' => $data['estado'],
+                'fecha_facturada' => $data['fechaFacturada'],
+                'fecha_pagada' => $data['fechaPagada'],
+            ]);
+        ó así:
+       */
+        return new FacturaResource(Factura::create($request->all()));
     }
 
     public function aGranelStore(AGranelStoreFacturaRequest $request){
@@ -71,16 +85,11 @@ class FacturaController extends Controller
         if (request()->has('cliente')){
            
             return new FacturaResource($factura->load('cliente'));
-            /*loadMissing es un método utilizado para cargar relaciones ausentes 
-            de un modelo sin sobrecargar las relaciones que ya han sido cargadas 
-            previamente. Esto es útil cuando tienes un modelo que ya ha sido recuperado 
-            de la base de datos y deseas cargar una relación que aún no ha sido cargada 
-            sin volver a cargar todas las relaciones que ya han sido cargadas previamente.*/
         }
      return new FacturaResource($factura);
    /*Ejemplo de peticion
    http://laravel-api-rest-ful.test/api/v1/facturas/14 
-   http://laravel-api-rest-ful.test/api/v1/facturas/14?cliente=true */
+   http://laravel-api-rest-ful.test/api/v1/facturas/14?cliente */
         
     }
 
