@@ -23,13 +23,13 @@ class StoreClienteRequest extends FormRequest
     public function rules(): array
     {
         return [            
-            'name'=> ['required'] ,
-            'tipo'=> ['required',Rule::in(['i','I','E','e'])],
-            'email'=> ['required','email'],
-            'direccion'=> ['required'],
-            'ciudad'=> ['required'],
-            'departamento'=> ['required'],
-            'codigoPostal'=> ['required'],
+            'name'=> 'required',
+            'tipo'=> 'required',
+            'email'=> 'required|email',
+            'direccion'=> 'required',
+            'ciudad'=> 'required',
+            'departamento'=> 'required',
+            'codigoPostal'=> 'required',
         ];
     }
     /*El método prepareForValidation es un método utilizado en las clases de 
@@ -38,6 +38,7 @@ class StoreClienteRequest extends FormRequest
     protected function prepareForValidation(){
 
         $this->merge([
+            // 'tipo' => strtolower($this->tipo), // Convertir a minúsculas
             'codigo_postal' => $this->codigoPostal,
         ]);
     }

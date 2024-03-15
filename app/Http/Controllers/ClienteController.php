@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\ClienteCollection;
 use App\Filters\ClienteFilter;
 use App\Http\Resources\ClienteResource;
+use App\Exceptions\InvalidOrderException;
 
 class ClienteController extends Controller
 {
@@ -32,7 +33,7 @@ class ClienteController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Mostrar el formulario para crear un nuevo recurso.
      */
     public function create()
     {
@@ -44,9 +45,8 @@ class ClienteController extends Controller
      */
     public function store(StoreClienteRequest $request)
     {
-        return  $request->all();
-        // Cliente::create($request->all());
-        // return new ClienteResource(Cliente::create($request->all()));
+       
+        return new ClienteResource(Cliente::create($request->all()));
         
     }
 

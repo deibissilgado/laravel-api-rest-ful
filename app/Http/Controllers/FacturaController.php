@@ -9,6 +9,7 @@ use App\Http\Resources\FacturaCollection;
 use Illuminate\Http\Request;
 use App\Filters\FacturaFilter;
 use App\Http\Requests\AGranelStoreFacturaRequest;
+use App\Http\Resources\FacturaResource;
 use Illuminate\Support\Arr;
 
 class FacturaController extends Controller
@@ -51,11 +52,13 @@ class FacturaController extends Controller
     public function aGranelStore(AGranelStoreFacturaRequest $request){
 
       $aGreanel = collect($request->all())->map( function($array,$key){
+        
                     return Arr::except($array,['clienteId',
                                                 'fechaFacturada',
                                                 'fechaPagada',
                                                 ]);
                });
+
      Factura::insert($aGreanel->toArray());
 
     }
@@ -63,8 +66,22 @@ class FacturaController extends Controller
      * Display the specified resource.
      */
     public function show(Factura $factura)
-    {
-        //
+    {        
+       // Verificar si el parámetro cliente está presente en la solicitud
+        if (request()->has('cliente')){
+           
+            return new FacturaResource($factura->load('cliente'));
+            /*loadMissing es un método utilizado para cargar relaciones ausentes 
+            de un modelo sin sobrecargar las relaciones que ya han sido cargadas 
+            previamente. Esto es útil cuando tienes un modelo que ya ha sido recuperado 
+            de la base de datos y deseas cargar una relación que aún no ha sido cargada 
+            sin volver a cargar todas las relaciones que ya han sido cargadas previamente.*/
+        }
+     return new FacturaResource($factura);
+   /*Ejemplo de peticion
+   http://laravel-api-rest-ful.test/api/v1/facturas/14 
+   http://laravel-api-rest-ful.test/api/v1/facturas/14?cliente=true */
+        
     }
 
     /**
