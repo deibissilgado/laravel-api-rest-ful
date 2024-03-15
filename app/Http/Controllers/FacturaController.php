@@ -98,7 +98,7 @@ class FacturaController extends Controller
      */
     public function edit(UpdateFacturaRequest $request, Factura $factura)
     {
-        $factura->update($request->all());
+        // $factura->update($request->all());
     }
 
     /**
@@ -114,6 +114,6 @@ class FacturaController extends Controller
      */
     public function destroy(Factura $factura)
     {
-        //
+        $factura->delete();
     }
 }
