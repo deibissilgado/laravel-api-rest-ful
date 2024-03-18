@@ -11,7 +11,10 @@ class AGranelStoreFacturaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; //todos
+        $user = $this->user();
+        /*si es diferente a null y tiene token para baorrar
+        Nota: puedes crear otro toquen */
+        return $user != null && $user->tokenCan('delete');
     }
 
     /**
