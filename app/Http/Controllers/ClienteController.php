@@ -93,6 +93,7 @@ class ClienteController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-        //
+        return  response()->json($cliente);
     }
+    
 }

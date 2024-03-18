@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use App\Filters\FacturaFilter;
 use App\Http\Requests\AGranelStoreFacturaRequest;
 use App\Http\Resources\FacturaResource;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Arr;
 
 class FacturaController extends Controller
@@ -77,19 +79,27 @@ class FacturaController extends Controller
 
     }
     /**
-     * Display the specified resource.
+     * Muestra el recurso especificado.
      */
-    public function show(Factura $factura)
-    {        
+    public function show($factura)
+    {     
+        /* Evito la inyeccion de dependencia show(Factura $factura) para
+        personalizar el mensaje de error */  
+       $factura = Factura::find($factura);
+
+        if (!$factura) {
+            return response()->json(['message' => 'No existe la factura'], 404);
+        }
+
        // Verificar si el parámetro cliente está presente en la solicitud
         if (request()->has('cliente')){
            
             return new FacturaResource($factura->load('cliente'));
         }
-     return new FacturaResource($factura);
-   /*Ejemplo de peticion
-   http://laravel-api-rest-ful.test/api/v1/facturas/14 
-   http://laravel-api-rest-ful.test/api/v1/facturas/14?cliente */
+       return new FacturaResource($factura);
+        /*Ejemplo de peticion
+        http://laravel-api-rest-ful.test/api/v1/facturas/14 
+        http://laravel-api-rest-ful.test/api/v1/facturas/14?cliente */
         
     }
 
@@ -112,8 +122,23 @@ class FacturaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Factura $factura)
+    public function destroy($factura)
     {
+       $barrada = Factura::find($factura);
+
+       if (!$barrada) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Factura no existe'
+            ],404);
+        }
+
         $factura->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Factura eliminada correctamente'
+        ],200);
+ 
     }
 }
