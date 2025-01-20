@@ -10,6 +10,7 @@ use App\Http\Resources\ClienteCollection;
 use App\Filters\ClienteFilter;
 use App\Http\Resources\ClienteResource;
 use App\Exceptions\InvalidOrderException;
+use mod_bigbluebuttonbn\logger;
 
 class ClienteController extends Controller
 {
@@ -18,6 +19,7 @@ class ClienteController extends Controller
      */
     public function index(Request $request)
     {
+        logger()->info('Solicitud a /api/v1/clientes recibida', ['request' => request()->all()]);
         $filtro = new ClienteFilter;
         $queryItems = $filtro->transform($request);
       //Si el valor incluirFacturas en la petición, http://laravel-api-rest-ful.test/api/v1/clientes?incluirFacturas=true

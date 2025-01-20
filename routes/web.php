@@ -38,6 +38,7 @@ Route::get('/setup', function () {
     }
     if (auth()->attempt($credentials)) {
         $user = auth()->user();
+        /** @var User $user */
         // se crean tres token con permisos distintos
         $adminToken = $user->createToken('admin-token',['create','update','delete']);
         $updateToken = $user->createToken('update-token',['create','update']);
