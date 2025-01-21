@@ -47,7 +47,7 @@ class ClienteController extends Controller
      */
     public function store(StoreClienteRequest $request)
     {
-       
+       logger()->info('Solicitud a /api/v1/clientes recibida', ['request' => request()->all()]);
         return new ClienteResource(Cliente::create($request->all()));
         
     }
