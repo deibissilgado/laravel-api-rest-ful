@@ -88,6 +88,7 @@ class ClienteController extends Controller
     public function update(UpdateClienteRequest $request, Cliente $cliente)
     {
         $cliente->update($request->all());
+        
     }
 
     /**
@@ -95,7 +96,7 @@ class ClienteController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-        return  response()->json($cliente);
+        return   $cliente->delete();
     }
     
 }
